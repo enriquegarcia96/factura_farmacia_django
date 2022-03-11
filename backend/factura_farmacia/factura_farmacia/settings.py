@@ -82,7 +82,7 @@ DATABASES = {
         'PORT': '3306',
         'USER': 'root',
         'PASSWORD': 'Dragon97',
-        'NAME': 'factura_farmacia',
+        'NAME': 'factura_farmacia_santos',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         }
