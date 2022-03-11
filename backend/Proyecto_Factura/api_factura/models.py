@@ -22,11 +22,6 @@ class Factura(models.Model):
     numeroIdentidad = models.ForeignKey(Persona, on_delete=models.CASCADE)
 
 
-class Impuesto_por_factura(models.Model):
-    impuesto_impuesto_id = models.ForeignKey(Factura, on_delete=models.CASCADE)  
-    factura_factura_id = models.ForeignKey(Factura, on_delete=models.CASCADE)
-
-
 class Descripcion_impuesto_descuentos(models.Model):
     descripcion = models.CharField(max_length=30)
     valor = models.DecimalField(max_digits=3, decimal_places=2)
@@ -39,15 +34,20 @@ class Descuentos(models.Model):
 
 
 class Impuesto(models.Model):
-    descripcion_impuesto_descuentos_impuestos_descuentos_id = models.ForeignKey(
-        Impuesto_por_factura, models.CASCADE)
     Descripcion_impuesto_descuentos_impuesto_descuentos_id = models.ForeignKey(
         Descripcion_impuesto_descuentos, models.CASCADE)
 
 
+class Impuesto_por_factura(models.Model):
+    impuesto_impuesto_id = models.ForeignKey(
+        Impuesto, on_delete=models.CASCADE)
+    factura_factura_id = models.ForeignKey(Factura, on_delete=models.CASCADE)
+
+
 class factura_por_descuentos(models.Model):
     factura_factura_id = models.ForeignKey(Factura, on_delete=models.CASCADE)
-    descuentos_descuentos_id = models.ForeignKey(Descuentos, on_delete=models.CASCADE)
+    descuentos_descuentos_id = models.ForeignKey(
+        Descuentos, on_delete=models.CASCADE)
 
 
 class Categoria(models.Model):
@@ -75,5 +75,3 @@ class Factura_detalle(models.Model):
         Producto, on_delete=models.CASCADE)
     factura_factura_id = models.ForeignKey(Factura, on_delete=models.CASCADE)
     cantidad = models.DecimalField(max_digits=3, decimal_places=2, null=True)
-
-
