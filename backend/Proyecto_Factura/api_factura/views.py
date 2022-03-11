@@ -3,8 +3,6 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.views import View
-
-
 from .models import Persona
 
 # Create your views here.
@@ -16,11 +14,21 @@ class RegistroCliente(View):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-    #todo: hacer el post para registro de usuario
     def post(self, request):
-        data = json.loads(request.body)
-        Persona.objects.create(nombre)
-        return JsonResponse(datos)
+        jd = json.loads(request.body)
+        Persona.objects.create(nombre=jd['nombre'], apellido=jd['apellido'], direccion=jd['direccion'], telefono=jd[
+                               'telefono'], genero=jd['genero'], numero_identidad=jd['numero_identidad'])
+        resp = {'mensaje': 'Acompletado'}
+        return JsonResponse(resp)
+
+
+#! aquiiii
+#todo: terminar el buscar un usuario
+def obtenerUsuario(request, id):
+    usuario = Persona.objects.get(numero_identidad=id)
+    print("aquii", usuario)
+    datos = {'mensaje': 'completado'}
+    return JsonResponse(usuario)
 
 
 class FacturaView(View):
