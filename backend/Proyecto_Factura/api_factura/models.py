@@ -15,11 +15,19 @@ class Persona(models.Model):
         max_length=10, choices=GENERO, default='Masculino')
     numero_identidad = models.CharField(max_length=13)
 
+    def __str__(self) :
+        return self.nombre + ' ' + self.apellido
+
+    
 
 class Factura(models.Model):
     fecha = models.DateField(auto_now=True)
     total = models.DecimalField(max_digits=6, decimal_places=2, null=True)
     numeroIdentidad = models.ForeignKey(Persona, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.numero_identidad
+
 
 
 class Descripcion_impuesto_descuentos(models.Model):
@@ -48,11 +56,19 @@ class factura_por_descuentos(models.Model):
     factura_factura_id = models.ForeignKey(Factura, on_delete=models.CASCADE)
     descuentos_descuentos_id = models.ForeignKey(
         Descuentos, on_delete=models.CASCADE)
+    
+    ## todo esto esta malo
+    def __str__(self) :
+        return self.factura_factura_id + self.descuentos_descuentos_id
 
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.nombre
+        
 
 
 class Producto(models.Model):
