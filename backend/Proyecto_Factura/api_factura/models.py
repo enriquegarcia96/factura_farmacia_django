@@ -15,10 +15,9 @@ class Persona(models.Model):
         max_length=10, choices=GENERO, default='Masculino')
     numero_identidad = models.CharField(max_length=13)
 
-    def __str__(self) :
-        return self.nombre + ' ' + self.apellido
+    # def __str__(self) :
+    #     return self.nombre + ' ' + self.apellido
 
-    
 
 class Factura(models.Model):
     fecha = models.DateField(auto_now=True)
@@ -27,7 +26,6 @@ class Factura(models.Model):
 
     def __str__(self):
         return self.numero_identidad
-
 
 
 class Descripcion_impuesto_descuentos(models.Model):
@@ -56,9 +54,9 @@ class factura_por_descuentos(models.Model):
     factura_factura_id = models.ForeignKey(Factura, on_delete=models.CASCADE)
     descuentos_descuentos_id = models.ForeignKey(
         Descuentos, on_delete=models.CASCADE)
-    
-    ## todo esto esta malo
-    def __str__(self) :
+
+    # todo esto esta malo
+    def __str__(self):
         return self.factura_factura_id + self.descuentos_descuentos_id
 
 
@@ -68,7 +66,6 @@ class Categoria(models.Model):
 
     def __str__(self):
         return self.nombre
-        
 
 
 class Producto(models.Model):
