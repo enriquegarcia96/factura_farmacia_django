@@ -1,17 +1,5 @@
-
-import { RegistroScreen } from './ui/components/pages/RegistroScreen.jsx'
-
+import { MenuScreen } from "./ui/components/pages/MenuScreen.jsx";
 
 export const App = () => {
-  return (
-    <div>
-      App
-
-      <RegistroScreen />
-      
-
-
-
-    </div>
-  )
-}
+  return <MenuScreen />;
+};
