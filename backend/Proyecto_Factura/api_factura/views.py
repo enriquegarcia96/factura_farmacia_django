@@ -3,7 +3,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.views import View
-from .models import Persona, Categoria, Producto
+from .models import Descripcion_impuesto_descuentos, Factura, Impuesto, Persona, Categoria, Producto
 
 # Create your views here.
 
@@ -42,6 +42,9 @@ class FacturaView(View):
         return JsonResponse(datos)
 
 
+
+
+### FALTA AQUIIII
 class Factura_de_compra(View):
 
     @method_decorator(csrf_exempt)
@@ -49,7 +52,9 @@ class Factura_de_compra(View):
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request):
-        print(request.body)
+        factura = json.loads(request.body)
+        Factura.objects.create(Persona.objects.get(
+            numero_identidad=factura['persona_persona_id']), fecha=factura['fecha'], total=factura['total'])
 
         datos = {'Mensaje': 'SSIIIIIUUU'}
 
@@ -99,8 +104,8 @@ class Registro_Producto(View):
 
     def post(self, request):
         producto = json.loads(request.body)
-        print("aquiiii", producto)
-        Producto.objects.create(Categoria.objects.get(id=producto['categoria_categoria_id']), precio_venta=producto['precio_venta'], precio_costo=producto['precio_costo'],
+        #print(producto)
+        Producto.objects.create(Categoria.objects.get(id=producto['categoria_categoria_id_id']), precio_venta=producto['precio_venta'], precio_costo=producto['precio_costo'],
                                 nombre_producto=producto['nombre_producto'], descripcion=producto['descripcion'], fecha_elaboracion=producto['fecha_elaboracion'], fecha_vencimiento=producto['fecha_vencimiento'])
         resp = {'Mensaje': 'Completado', "Producto": producto}
         return JsonResponse(resp)
@@ -116,3 +121,31 @@ class Factura_detalle(View):
         # relacion con factura y producto
 
         pass
+
+
+# tabla de descripcion_impuesto_descuentos
+class Descripcion_impuesto(View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+
+        impuesto = json.loads(request.body)
+        Descripcion_impuesto_descuentos.objects.create(
+            descripcion=impuesto['descripcion'], valor=impuesto['valor'], estado=impuesto['estado']
+        )
+
+        datos = {'Mensaje': '0SIIIUUUU', 'Impuesto': impuesto}
+
+        return JsonResponse(datos)
+
+
+class Impuesto2(View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    pass
