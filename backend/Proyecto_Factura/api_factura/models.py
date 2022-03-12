@@ -15,8 +15,8 @@ class Persona(models.Model):
         max_length=10, choices=GENERO, default='Masculino')
     numero_identidad = models.CharField(max_length=13)
 
-    # def __str__(self) :
-    #     return self.nombre + ' ' + self.apellido
+    def __str__(self) :
+        return self.numero_identidad
 
 
 class Factura(models.Model):
@@ -69,7 +69,7 @@ class Categoria(models.Model):
 
 
 class Producto(models.Model):
-    precio = models.DecimalField(max_digits=6, decimal_places=2)
+    precio_venta = models.DecimalField(max_digits=6, decimal_places=2)
     precio_costo = models.DecimalField(max_digits=6, decimal_places=2)
     nombre_producto = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=30)
@@ -79,8 +79,8 @@ class Producto(models.Model):
         auto_now_add=False, null=True, blank=True)
 
     #  poner la categoria
-    categoria = models.ForeignKey(
-        Categoria, on_delete=models.CASCADE, null=True)
+    categoria_categoria_id= models.ForeignKey(
+        Categoria, on_delete=models.CASCADE)
 
 
 class Factura_detalle(models.Model):

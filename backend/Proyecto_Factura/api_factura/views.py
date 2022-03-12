@@ -3,7 +3,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.views import View
-from .models import Persona, Categoria
+from .models import Descripcion_impuesto_descuentos, Factura, Impuesto, Persona, Categoria, Producto
 
 # Create your views here.
 
@@ -42,23 +42,28 @@ class FacturaView(View):
         return JsonResponse(datos)
 
 
-class FacturaNueva(View):
+#! FALTA AQUIIII
+class Factura_de_compra(View):
 
-    # todo: hacer la relacion con producto
-    # @method_decorator(csrf_exempt)
-    # def dispatch(self, request, *args, **kwargs):
-    #     return super().dispatch(request, *args, **kwargs)
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
-    # def ingresoFactura(self, request):
-    #     print(request.body)
+    def post(self, request, id):
 
-    pass
+        factura = json.loads(request.body)
+        iden = Persona.objects.get(numero_identidad=id)
+        Factura.objects.create( numeroIdentidad=factura['persona_persona_id'] , total=factura['total'])
+
+        datos = {'Mensaje': 'SSIIIIIUUU'}
+
+        return JsonResponse(datos)
 
 
 # Categoria
 class Registro_categoria(View):
 
-    @method_decorator(csrf_exempt)
+    @ method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
@@ -69,3 +74,77 @@ class Registro_categoria(View):
         datos = {'mensaje': 'Completado'}
 
         return JsonResponse(datos)
+
+    def get(self, request, id=0):
+
+        if(id > 0):
+            categorias = list(Categoria.objects.filter(id=id).values())
+            if len(categorias) > 0:
+                categoria = categorias[0]
+                datos = {'Mensaje': 'Completado', 'Categoria': categoria}
+            else:
+                datos = {'Mensaje': 'Categoria no encontrada'}
+            return JsonResponse(datos)
+        else:
+            categorias = list(Categoria.objects.values())
+            if len(categorias) > 0:
+                datos = {'Mensaje': 'Completado', 'Categoria': categorias}
+            else:
+                datos = {'mensaje': 'Categorias no encontrada'}
+            return JsonResponse(datos)
+
+
+# arreglar el problema de categoria id
+class Registro_Producto(View):
+
+    @ method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        producto = json.loads(request.body)
+        # print(producto)
+        Producto.objects.create(Categoria.objects.get(categoria_categoria_id=producto['categoria_categoria_id_id']), precio_venta=producto['precio_venta'], precio_costo=producto['precio_costo'],
+                                nombre_producto=producto['nombre_producto'], descripcion=producto['descripcion'], fecha_elaboracion=producto['fecha_elaboracion'], fecha_vencimiento=producto['fecha_vencimiento'])
+        resp = {'Mensaje': 'Completado', "Producto": producto}
+        return JsonResponse(resp)
+
+
+class Factura_detalle(View):
+
+    @ method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        # relacion con factura y producto
+
+        pass
+
+
+# tabla de descripcion_impuesto_descuentos
+class Descripcion_impuesto(View):
+
+    @ method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+
+        impuesto = json.loads(request.body)
+        Descripcion_impuesto_descuentos.objects.create(
+            descripcion=impuesto['descripcion'], valor=impuesto['valor'], estado=impuesto['estado']
+        )
+
+        datos = {'Mensaje': '0SIIIUUUU', 'Impuesto': impuesto}
+
+        return JsonResponse(datos)
+
+
+class Impuesto2(View):
+
+    @ method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    pass
