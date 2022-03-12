@@ -10,11 +10,11 @@ export const ListaLiBoostrap = () => {
         />
         <LiBoostrap
           estiloClassName={"list-group-item"}
-          titulo={"Ingreso de Categorias"}
+          titulo={"Venta"}
         />
         <LiBoostrap
           estiloClassName={"list-group-item"}
-          titulo={"Ingreso de Categorias"}
+          titulo={"Registro de cliente"}
         />
       </ul>
     </div>
