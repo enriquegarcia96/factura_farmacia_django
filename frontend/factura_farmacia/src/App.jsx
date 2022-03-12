@@ -1,7 +1,5 @@
-
+import { MenuScreen } from "./ui/components/pages/MenuScreen.jsx";
 
 export const App = () => {
-  return (
-    <div>App</div>
-  )
-}
+  return <MenuScreen />;
+};
