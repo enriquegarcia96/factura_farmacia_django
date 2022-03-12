@@ -3,7 +3,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.views import View
-from .models import Persona
+from .models import Persona, Categoria
 
 # Create your views here.
 
@@ -14,6 +14,7 @@ class RegistroCliente(View):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
+    # Guarda un nuevo cliente
     def post(self, request):
         jd = json.loads(request.body)
         Persona.objects.create(nombre=jd['nombre'], apellido=jd['apellido'], direccion=jd['direccion'], telefono=jd[
@@ -21,14 +22,13 @@ class RegistroCliente(View):
         resp = {'mensaje': 'Acompletado'}
         return JsonResponse(resp)
 
-
-#! aquiiii
-#todo: terminar el buscar un usuario
-def obtenerUsuario(request, id):
-    usuario = Persona.objects.get(numero_identidad=id)
-    print("aquii", usuario)
-    datos = {'mensaje': 'completado'}
-    return JsonResponse(usuario)
+    # encuentra un usuario
+    def get(self, request, id):
+        buscarUsuario = list(Persona.objects.filter(
+            numero_identidad=id).values())
+        usuario = buscarUsuario[0]
+        datos = {'mensaje': 'Usuario encontrado', 'Usuario': usuario}
+        return JsonResponse(datos)
 
 
 class FacturaView(View):
@@ -53,3 +53,19 @@ class FacturaNueva(View):
     #     print(request.body)
 
     pass
+
+
+# Categoria
+class Registro_categoria(View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        dato = json.loads(request.body)
+        Categoria.objects.create(
+            nombre=dato['nombre'], descripcion=dato['descripcion'])
+        datos = {'mensaje': 'Completado'}
+
+        return JsonResponse(datos)
