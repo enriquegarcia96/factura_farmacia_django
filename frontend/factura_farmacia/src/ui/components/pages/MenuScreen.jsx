@@ -1,6 +1,6 @@
+
 import { AppRouter } from "../../../routes/AppRouter";
 import { ListaLiBoostrap } from "../moleculas/ListaLiBoostrap";
-
 
 export const MenuScreen = () => {
   return (
@@ -11,10 +11,10 @@ export const MenuScreen = () => {
         <ListaLiBoostrap />
       </div>
 
-        {/* para las navegacion del menu */}
-        <div className="col" >
-          <AppRouter /> 
-        </div>
+      {/* para las navegacion del menu */}
+      <div className="col">
+        <AppRouter />
+      </div>
     </div>
   );
 };
