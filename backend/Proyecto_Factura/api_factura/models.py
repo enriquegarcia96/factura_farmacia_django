@@ -1,4 +1,3 @@
-
 from django.db import models
 # Create your models here.
 
@@ -15,7 +14,7 @@ class Persona(models.Model):
         max_length=10, choices=GENERO, default='Masculino')
     numero_identidad = models.CharField(max_length=13)
 
-    def __str__(self) :
+    def __str__(self):
         return self.numero_identidad
 
 
@@ -60,8 +59,18 @@ class factura_por_descuentos(models.Model):
         return self.factura_factura_id + self.descuentos_descuentos_id
 
 
+categoria_status = [
+    (1, 'Pastilla'),
+    (2, 'Inyenccion'),
+    (3, 'Jarabe'),
+    (4, 'Analgésicos'),
+    (5, 'Uso diario'),
+]
+
+
 class Categoria(models.Model):
-    nombre = models.CharField(max_length=30)
+    nombre = models.IntegerField(
+        null=False, blank=False, choices=categoria_status)
     descripcion = models.CharField(max_length=30)
 
     def __str__(self):
@@ -79,7 +88,7 @@ class Producto(models.Model):
         auto_now_add=False, null=True, blank=True)
 
     #  poner la categoria
-    categoria_categoria_id= models.ForeignKey(
+    categoria_categoria_id = models.ForeignKey(
         Categoria, on_delete=models.CASCADE)
 
 

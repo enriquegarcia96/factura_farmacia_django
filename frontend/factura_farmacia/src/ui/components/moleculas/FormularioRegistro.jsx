@@ -44,15 +44,15 @@ export const FormularioRegistro = () => {
         <div className="mb-3">
           <InputBoostrap
             tituloSpan={"Numero de Identidad"}
-            type={"number"}
+            type={"text"}
             estiloClassName={"form-control"}
             placeholder={"0209200089765"}
           />
         </div>
 
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <SelectBoostrap />
-        </div>
+        </div> */}
       </fieldset>
     </form>
   );

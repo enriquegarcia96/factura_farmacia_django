@@ -1,22 +1,16 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-
-// todo: terminar la navegacion
-
-export const LiBoostrap = ({ estiloClassName, titulo }) => {
+export const LiBoostrap = ({ estiloClassName, titulo, to, isActive }) => {
   return (
-    <>
-      <nav>
-        {/* <NavLink
-        className={({ isActivate }) =>
-          "nav-item nav-link" + (isActivate ? "active" : "")
+    <nav>
+      <NavLink
+        className={({ isActive }) =>
+          estiloClassName + (isActive ? " active" : "")
         }
-        to="categoria"
-      >{titulo}</NavLink> */}
-
-
-        <li className={estiloClassName}>{titulo}</li> 
-      </nav>
-    </>
+        to={to}
+      >
+        {titulo}
+      </NavLink>
+    </nav>
   );
 };
