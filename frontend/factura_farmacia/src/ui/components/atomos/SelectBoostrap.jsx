@@ -1,8 +1,12 @@
-export const SelectBoostrap = () => {
+export const SelectBoostrap = ({ categoria = [] }) => {
+  console.log(categoria);
   return (
     <select className="form-select" aria-label="Default select example">
-      <option selected>Open this select menu</option>
-      <option value="1">One</option>
+      {categoria.map((categoria) => (
+        <option key={categoria.id} value={categoria.id}>
+          {categoria.nombre}
+        </option>
+      ))}
     </select>
   );
 };
