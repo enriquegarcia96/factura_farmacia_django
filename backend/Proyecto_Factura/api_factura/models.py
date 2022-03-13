@@ -78,18 +78,18 @@ class Categoria(models.Model):
 
 
 class Producto(models.Model):
+    #  poner la categoria
+    categoria_categoria_id = models.ForeignKey(
+        Categoria, on_delete=models.CASCADE)
+
     precio_venta = models.DecimalField(max_digits=6, decimal_places=2)
     precio_costo = models.DecimalField(max_digits=6, decimal_places=2)
     nombre_producto = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=30)
     fecha_elaboracion = models.DateField(
-        auto_now_add=False, null=True, blank=True)
+        auto_now_add=False)
     fecha_vencimiento = models.DateField(
-        auto_now_add=False, null=True, blank=True)
-
-    #  poner la categoria
-    categoria_categoria_id = models.ForeignKey(
-        Categoria, on_delete=models.CASCADE)
+        auto_now_add=False)
 
 
 class Factura_detalle(models.Model):

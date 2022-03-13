@@ -53,7 +53,8 @@ class Factura_de_compra(View):
 
         factura = json.loads(request.body)
         iden = Persona.objects.get(numero_identidad=id)
-        Factura.objects.create( numeroIdentidad=factura['persona_persona_id'] , total=factura['total'])
+        Factura.objects.create(
+            numeroIdentidad=factura['persona_persona_id'], total=factura['total'])
 
         datos = {'Mensaje': 'SSIIIIIUUU'}
 
@@ -94,7 +95,7 @@ class Registro_categoria(View):
             return JsonResponse(datos)
 
 
-# arreglar el problema de categoria id
+
 class Registro_Producto(View):
 
     @ method_decorator(csrf_exempt)
@@ -103,8 +104,8 @@ class Registro_Producto(View):
 
     def post(self, request):
         producto = json.loads(request.body)
-        # print(producto)
-        Producto.objects.create(Categoria.objects.get(categoria_categoria_id=producto['categoria_categoria_id_id']), precio_venta=producto['precio_venta'], precio_costo=producto['precio_costo'],
+        cate = Categoria.objects.get(pk=producto['categoria_categoria_id'])
+        Producto.objects.create(categoria_categoria_id=cate, precio_venta=producto['precio_venta'], precio_costo=producto['precio_costo'],
                                 nombre_producto=producto['nombre_producto'], descripcion=producto['descripcion'], fecha_elaboracion=producto['fecha_elaboracion'], fecha_vencimiento=producto['fecha_vencimiento'])
         resp = {'Mensaje': 'Completado', "Producto": producto}
         return JsonResponse(resp)
