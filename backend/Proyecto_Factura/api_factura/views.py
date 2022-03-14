@@ -3,7 +3,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.views import View
-from .models import Descripcion_impuesto_descuentos, Factura, Impuesto, Persona, Categoria, Producto
+from .models import Descripcion_impuesto_descuentos, Factura, Impuesto, Persona, Categoria, Producto, factura_por_descuentos
 
 # Create your views here.
 
@@ -36,13 +36,12 @@ class FacturaView(View):
     def get(self, request):
         companies = list(Persona.objects.values())
         if len(companies) > 0:
-            datos = {'mensaje': 'completado', 'compañias': companies}
+            datos = {'mensaje': 'completado', 'Facturas': companies}
         else:
             datos = {'mensaje': 'error'}
         return JsonResponse(datos)
 
 
-#! FALTA AQUIIII
 class Factura_de_compra(View):
 
     @method_decorator(csrf_exempt)
@@ -50,13 +49,14 @@ class Factura_de_compra(View):
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, id):
-
         factura = json.loads(request.body)
-        iden = Persona.objects.get(numero_identidad=id)
+        id_cliente = Persona.objects.get(pk=id)
         Factura.objects.create(
-            numeroIdentidad=factura['persona_persona_id'], total=factura['total'])
+            numeroIdentidad=id_cliente, total=factura['total'])
+        datos = {'Mensaje': 'SSIIIIIUUU', 'Factura': factura}
 
-        datos = {'Mensaje': 'SSIIIIIUUU'}
+        # #Factura por descuentos -> tabla
+        # factura_por_descuentos.objects.create( Factura.objects.get()  )
 
         return JsonResponse(datos)
 
@@ -95,7 +95,6 @@ class Registro_categoria(View):
             return JsonResponse(datos)
 
 
-
 class Registro_Producto(View):
 
     @ method_decorator(csrf_exempt)
@@ -110,6 +109,11 @@ class Registro_Producto(View):
         resp = {'Mensaje': 'Completado', "Producto": producto}
         return JsonResponse(resp)
 
+    def get(self, request):
+        productos = list(Producto.objects.values())
+        datos = {'Mensaje': 'Listo', 'Productos': productos}
+        return JsonResponse(datos)
+
 
 class Factura_detalle(View):
 
@@ -118,7 +122,6 @@ class Factura_detalle(View):
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request):
-        # relacion con factura y producto
 
         pass
 
@@ -140,12 +143,3 @@ class Descripcion_impuesto(View):
         datos = {'Mensaje': '0SIIIUUUU', 'Impuesto': impuesto}
 
         return JsonResponse(datos)
-
-
-class Impuesto2(View):
-
-    @ method_decorator(csrf_exempt)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
-    pass
