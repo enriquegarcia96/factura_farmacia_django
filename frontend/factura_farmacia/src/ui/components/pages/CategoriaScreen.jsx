@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { FormularioCategoriaScreen } from "../moleculas/FormularioCategoriaScreen";
+import { FormularioCategoria } from "../moleculas/FormularioCategoria";
+
 import { apiCategorias } from "./ApiFactura";
 
 export const CategoriaScreen = () => {
   const [categoria, setCategoria] = useState([]);
-  const [descripcion2, setDescripcion] = useState();
 
   const categorias = async () => {
     try {
@@ -20,20 +20,23 @@ export const CategoriaScreen = () => {
     categorias();
   }, []);
 
-  //TODO: hacer la inserccion de categoria
-
-  const handleButton = (e) => {
-    e.preventDefault();
+  const ingresoCategotia = (e, categoria) => {
+    //e.preventDefault();
     console.log(categoria);
+  };
+
+  const event = (e) => {
+    //e.preventDefault();
   };
 
   return (
     <div>
-      <FormularioCategoriaScreen
+      <FormularioCategoria
         nombreCategoria={"Descripcion"}
         descripcion={"Descripcion"}
         categoria={categoria}
-        event={handleButton}
+        submit={ingresoCategotia}
+        event={event}
       />
     </div>
   );

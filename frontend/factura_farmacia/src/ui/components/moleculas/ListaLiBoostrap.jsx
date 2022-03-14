@@ -6,12 +6,12 @@ export const ListaLiBoostrap = () => {
       <ul className="list-group mt-6">
         <LiBoostrap
           estiloClassName={"list-group-item"}
-          titulo={"Resgistro de clientes"}
+          titulo={"Resgistro clientes"}
           to={"/registro"}
         />
         <LiBoostrap
           estiloClassName={"list-group-item"}
-          titulo={"Registro de categorias"}
+          titulo={"Registro categorias"}
           to={"/categoria"}
         />
         <LiBoostrap

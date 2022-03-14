@@ -5,14 +5,15 @@ export const FormularioCategoria = ({
   nombreCategoria,
   descripcion,
   categoria,
+  submit,
   event,
 }) => {
   return (
     <form>
       <fieldset>
-        <legend>Disabled fieldset example</legend>
+        <legend>Ingreso de categoria</legend>
         <div className="mb-3">
-          <SelectBoostrap categoria={categoria} />
+          <SelectBoostrap categoria={categoria} submit={submit} />
         </div>
         <div className="mb-3">
           <InputBoostrap
@@ -24,7 +25,7 @@ export const FormularioCategoria = ({
         </div>
       </fieldset>
 
-      <button type="submit" onClick={event} className="btn btn-primary">
+      <button type="submit" onClick={submit} className="btn btn-primary">
         Primary
       </button>
     </form>
